@@ -37,7 +37,7 @@ namespace stdgpu::cuda
  * \param[in] line The line from which this function was called
  * \param[in] function The function from which this function was called
  */
-inline void
+__attribute__((noinline)) void
 safe_call(const cudaError_t error, const char* file, const int line, const char* function)
 {
     if (error != cudaSuccess)

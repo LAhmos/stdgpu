@@ -22,14 +22,14 @@ namespace stdgpu
 {
 
 template <typename Block, typename Allocator>
-inline STDGPU_HOST_DEVICE
+__attribute__((noinline)) STDGPU_HOST_DEVICE
 mutex_array<Block, Allocator>::reference::reference(const typename bitset<Block, Allocator>::reference& bit_ref)
   : _bit_ref(bit_ref)
 {
 }
 
 template <typename Block, typename Allocator>
-inline STDGPU_DEVICE_ONLY bool
+__attribute__((noinline)) STDGPU_DEVICE_ONLY bool
 mutex_array<Block, Allocator>::reference::try_lock()
 {
     // Change state to LOCKED
@@ -38,7 +38,7 @@ mutex_array<Block, Allocator>::reference::try_lock()
 }
 
 template <typename Block, typename Allocator>
-inline STDGPU_DEVICE_ONLY void
+__attribute__((noinline)) STDGPU_DEVICE_ONLY void
 mutex_array<Block, Allocator>::reference::unlock()
 {
     // Change state back to UNLOCKED
@@ -46,14 +46,14 @@ mutex_array<Block, Allocator>::reference::unlock()
 }
 
 template <typename Block, typename Allocator>
-inline STDGPU_DEVICE_ONLY bool
+__attribute__((noinline)) STDGPU_DEVICE_ONLY bool
 mutex_array<Block, Allocator>::reference::locked() const
 {
     return _bit_ref;
 }
 
 template <typename Block, typename Allocator>
-inline mutex_array<Block, Allocator>
+__attribute__((noinline)) mutex_array<Block, Allocator>
 mutex_array<Block, Allocator>::createDeviceObject(const index_t& size, const Allocator& allocator)
 {
     mutex_array<Block, Allocator> result(bitset<Block, Allocator>::createDeviceObject(size, allocator));
@@ -62,27 +62,27 @@ mutex_array<Block, Allocator>::createDeviceObject(const index_t& size, const All
 }
 
 template <typename Block, typename Allocator>
-inline void
+__attribute__((noinline)) void
 mutex_array<Block, Allocator>::destroyDeviceObject(mutex_array<Block, Allocator>& device_object)
 {
     bitset<Block, Allocator>::destroyDeviceObject(device_object._lock_bits);
 }
 
 template <typename Block, typename Allocator>
-inline mutex_array<Block, Allocator>::mutex_array(const bitset<Block, Allocator>& lock_bits)
+__attribute__((noinline)) mutex_array<Block, Allocator>::mutex_array(const bitset<Block, Allocator>& lock_bits)
   : _lock_bits(lock_bits)
 {
 }
 
 template <typename Block, typename Allocator>
-inline STDGPU_HOST_DEVICE typename mutex_array<Block, Allocator>::allocator_type
+__attribute__((noinline)) STDGPU_HOST_DEVICE typename mutex_array<Block, Allocator>::allocator_type
 mutex_array<Block, Allocator>::get_allocator() const noexcept
 {
     return _lock_bits.get_allocator();
 }
 
 template <typename Block, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename mutex_array<Block, Allocator>::reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename mutex_array<Block, Allocator>::reference
 mutex_array<Block, Allocator>::operator[](const index_t n)
 {
     STDGPU_EXPECTS(0 <= n);
@@ -92,28 +92,28 @@ mutex_array<Block, Allocator>::operator[](const index_t n)
 }
 
 template <typename Block, typename Allocator>
-inline STDGPU_DEVICE_ONLY const typename mutex_array<Block, Allocator>::reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY const typename mutex_array<Block, Allocator>::reference
 mutex_array<Block, Allocator>::operator[](const index_t n) const
 {
     return const_cast<mutex_array<Block, Allocator>*>(this)->operator[](n);
 }
 
 template <typename Block, typename Allocator>
-inline STDGPU_HOST_DEVICE bool
+__attribute__((noinline)) STDGPU_HOST_DEVICE bool
 mutex_array<Block, Allocator>::empty() const noexcept
 {
     return (size() == 0);
 }
 
 template <typename Block, typename Allocator>
-inline STDGPU_HOST_DEVICE index_t
+__attribute__((noinline)) STDGPU_HOST_DEVICE index_t
 mutex_array<Block, Allocator>::size() const noexcept
 {
     return _lock_bits.size();
 }
 
 template <typename Block, typename Allocator>
-inline bool
+__attribute__((noinline)) bool
 mutex_array<Block, Allocator>::valid() const
 {
     return _lock_bits.count() == 0;
@@ -123,14 +123,14 @@ namespace detail
 {
 
 template <typename Lockable1>
-inline STDGPU_DEVICE_ONLY int
+__attribute__((noinline)) STDGPU_DEVICE_ONLY int
 try_lock(int i, Lockable1 lock1)
 {
     return lock1.try_lock() ? -1 : i;
 }
 
 template <typename Lockable1, typename... LockableN>
-inline STDGPU_DEVICE_ONLY int
+__attribute__((noinline)) STDGPU_DEVICE_ONLY int
 try_lock(int i, Lockable1 lock1, LockableN... lockn)
 {
     if (!lock1.try_lock())
@@ -153,7 +153,7 @@ try_lock(int i, Lockable1 lock1, LockableN... lockn)
 } // namespace detail
 
 template <typename Lockable1, typename Lockable2, typename... LockableN>
-inline STDGPU_DEVICE_ONLY int
+__attribute__((noinline)) STDGPU_DEVICE_ONLY int
 try_lock(Lockable1 lock1, Lockable2 lock2, LockableN... lockn)
 {
     return detail::try_lock(0, lock1, lock2, lockn...);

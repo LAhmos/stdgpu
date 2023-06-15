@@ -20,19 +20,19 @@
 #include <stdgpu/limits.h>
 #include <stdgpu/platform.h>
 
-inline STDGPU_DEVICE_ONLY unsigned long long int
+__attribute__((noinline)) STDGPU_DEVICE_ONLY unsigned long long int
 atomicSub(unsigned long long int* address, const unsigned long long int value)
 {
     return atomicAdd(address, stdgpu::numeric_limits<unsigned long long int>::max() - value + 1);
 }
 
-inline STDGPU_DEVICE_ONLY float
+__attribute__((noinline)) STDGPU_DEVICE_ONLY float
 atomicSub(float* address, const float value)
 {
     return atomicAdd(address, -value);
 }
 
-inline STDGPU_DEVICE_ONLY float
+__attribute__((noinline)) STDGPU_DEVICE_ONLY float
 atomicMin(float* address, const float value)
 {
     int* address_as_int = (int*)address;
@@ -49,7 +49,7 @@ atomicMin(float* address, const float value)
     return __int_as_float(old);
 }
 
-inline STDGPU_DEVICE_ONLY float
+__attribute__((noinline)) STDGPU_DEVICE_ONLY float
 atomicMax(float* address, const float value)
 {
     int* address_as_int = (int*)address;
@@ -69,13 +69,13 @@ atomicMax(float* address, const float value)
 namespace stdgpu::cuda
 {
 
-inline STDGPU_HOST_DEVICE bool
+__attribute__((noinline)) STDGPU_HOST_DEVICE bool
 atomic_is_lock_free() noexcept
 {
     return true;
 }
 
-inline STDGPU_DEVICE_ONLY void
+__attribute__((noinline)) STDGPU_DEVICE_ONLY void
 atomic_thread_fence() noexcept
 {
     __threadfence();

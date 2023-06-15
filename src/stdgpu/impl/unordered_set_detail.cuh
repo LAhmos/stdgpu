@@ -26,49 +26,49 @@ namespace stdgpu
 {
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_HOST_DEVICE typename unordered_set<Key, Hash, KeyEqual, Allocator>::allocator_type
+__attribute__((noinline)) STDGPU_HOST_DEVICE typename unordered_set<Key, Hash, KeyEqual, Allocator>::allocator_type
 unordered_set<Key, Hash, KeyEqual, Allocator>::get_allocator() const noexcept
 {
     return _base.get_allocator();
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::iterator
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::iterator
 unordered_set<Key, Hash, KeyEqual, Allocator>::begin() noexcept
 {
     return _base.begin();
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::const_iterator
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::const_iterator
 unordered_set<Key, Hash, KeyEqual, Allocator>::begin() const noexcept
 {
     return _base.begin();
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::const_iterator
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::const_iterator
 unordered_set<Key, Hash, KeyEqual, Allocator>::cbegin() const noexcept
 {
     return _base.cbegin();
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::iterator
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::iterator
 unordered_set<Key, Hash, KeyEqual, Allocator>::end() noexcept
 {
     return _base.end();
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::const_iterator
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::const_iterator
 unordered_set<Key, Hash, KeyEqual, Allocator>::end() const noexcept
 {
     return _base.end();
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::const_iterator
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::const_iterator
 unordered_set<Key, Hash, KeyEqual, Allocator>::cend() const noexcept
 {
     return _base.cend();
@@ -82,21 +82,21 @@ unordered_set<Key, Hash, KeyEqual, Allocator>::device_range() const
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_HOST_DEVICE typename unordered_set<Key, Hash, KeyEqual, Allocator>::index_type
+__attribute__((noinline)) STDGPU_HOST_DEVICE typename unordered_set<Key, Hash, KeyEqual, Allocator>::index_type
 unordered_set<Key, Hash, KeyEqual, Allocator>::bucket(const key_type& key) const
 {
     return _base.bucket(key);
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::index_type
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::index_type
 unordered_set<Key, Hash, KeyEqual, Allocator>::bucket_size(index_type n) const
 {
     return _base.bucket_size(n);
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::index_type
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::index_type
 unordered_set<Key, Hash, KeyEqual, Allocator>::count(const key_type& key) const
 {
     return _base.count(key);
@@ -105,21 +105,21 @@ unordered_set<Key, Hash, KeyEqual, Allocator>::count(const key_type& key) const
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
 template <typename KeyLike,
           STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(detail::is_transparent_v<Hash>&& detail::is_transparent_v<KeyEqual>)>
-inline STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::index_type
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::index_type
 unordered_set<Key, Hash, KeyEqual, Allocator>::count(const KeyLike& key) const
 {
     return _base.count(key);
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::iterator
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::iterator
 unordered_set<Key, Hash, KeyEqual, Allocator>::find(const key_type& key)
 {
     return _base.find(key);
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::const_iterator
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::const_iterator
 unordered_set<Key, Hash, KeyEqual, Allocator>::find(const key_type& key) const
 {
     return _base.find(key);
@@ -128,7 +128,7 @@ unordered_set<Key, Hash, KeyEqual, Allocator>::find(const key_type& key) const
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
 template <typename KeyLike,
           STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(detail::is_transparent_v<Hash>&& detail::is_transparent_v<KeyEqual>)>
-inline STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::iterator
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::iterator
 unordered_set<Key, Hash, KeyEqual, Allocator>::find(const KeyLike& key)
 {
     return _base.find(key);
@@ -137,14 +137,14 @@ unordered_set<Key, Hash, KeyEqual, Allocator>::find(const KeyLike& key)
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
 template <typename KeyLike,
           STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(detail::is_transparent_v<Hash>&& detail::is_transparent_v<KeyEqual>)>
-inline STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::const_iterator
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::const_iterator
 unordered_set<Key, Hash, KeyEqual, Allocator>::find(const KeyLike& key) const
 {
     return _base.find(key);
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_DEVICE_ONLY bool
+__attribute__((noinline)) STDGPU_DEVICE_ONLY bool
 unordered_set<Key, Hash, KeyEqual, Allocator>::contains(const key_type& key) const
 {
     return _base.contains(key);
@@ -153,7 +153,7 @@ unordered_set<Key, Hash, KeyEqual, Allocator>::contains(const key_type& key) con
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
 template <typename KeyLike,
           STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(detail::is_transparent_v<Hash>&& detail::is_transparent_v<KeyEqual>)>
-inline STDGPU_DEVICE_ONLY bool
+__attribute__((noinline)) STDGPU_DEVICE_ONLY bool
 unordered_set<Key, Hash, KeyEqual, Allocator>::contains(const KeyLike& key) const
 {
     return _base.contains(key);
@@ -161,14 +161,14 @@ unordered_set<Key, Hash, KeyEqual, Allocator>::contains(const KeyLike& key) cons
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
 template <class... Args>
-inline STDGPU_DEVICE_ONLY pair<typename unordered_set<Key, Hash, KeyEqual, Allocator>::iterator, bool>
+__attribute__((noinline)) STDGPU_DEVICE_ONLY pair<typename unordered_set<Key, Hash, KeyEqual, Allocator>::iterator, bool>
 unordered_set<Key, Hash, KeyEqual, Allocator>::emplace(Args&&... args)
 {
     return _base.emplace(forward<Args>(args)...);
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_DEVICE_ONLY pair<typename unordered_set<Key, Hash, KeyEqual, Allocator>::iterator, bool>
+__attribute__((noinline)) STDGPU_DEVICE_ONLY pair<typename unordered_set<Key, Hash, KeyEqual, Allocator>::iterator, bool>
 unordered_set<Key, Hash, KeyEqual, Allocator>::insert(
         const unordered_set<Key, Hash, KeyEqual, Allocator>::value_type& value)
 {
@@ -177,14 +177,14 @@ unordered_set<Key, Hash, KeyEqual, Allocator>::insert(
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
 template <typename ValueIterator, STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(detail::is_iterator_v<ValueIterator>)>
-inline void
+__attribute__((noinline)) void
 unordered_set<Key, Hash, KeyEqual, Allocator>::insert(ValueIterator begin, ValueIterator end)
 {
     _base.insert(begin, end);
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::index_type
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename unordered_set<Key, Hash, KeyEqual, Allocator>::index_type
 unordered_set<Key, Hash, KeyEqual, Allocator>::erase(const unordered_set<Key, Hash, KeyEqual, Allocator>::key_type& key)
 {
     return _base.erase(key);
@@ -192,70 +192,70 @@ unordered_set<Key, Hash, KeyEqual, Allocator>::erase(const unordered_set<Key, Ha
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
 template <typename KeyIterator, STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(detail::is_iterator_v<KeyIterator>)>
-inline void
+__attribute__((noinline)) void
 unordered_set<Key, Hash, KeyEqual, Allocator>::erase(KeyIterator begin, KeyIterator end)
 {
     _base.erase(begin, end);
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_HOST_DEVICE bool
+__attribute__((noinline)) STDGPU_HOST_DEVICE bool
 unordered_set<Key, Hash, KeyEqual, Allocator>::empty() const
 {
     return _base.empty();
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_HOST_DEVICE bool
+__attribute__((noinline)) STDGPU_HOST_DEVICE bool
 unordered_set<Key, Hash, KeyEqual, Allocator>::full() const
 {
     return _base.full();
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_HOST_DEVICE index_t
+__attribute__((noinline)) STDGPU_HOST_DEVICE index_t
 unordered_set<Key, Hash, KeyEqual, Allocator>::size() const
 {
     return _base.size();
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_HOST_DEVICE index_t
+__attribute__((noinline)) STDGPU_HOST_DEVICE index_t
 unordered_set<Key, Hash, KeyEqual, Allocator>::max_size() const noexcept
 {
     return _base.max_size();
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_HOST_DEVICE index_t
+__attribute__((noinline)) STDGPU_HOST_DEVICE index_t
 unordered_set<Key, Hash, KeyEqual, Allocator>::bucket_count() const
 {
     return _base.bucket_count();
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_HOST_DEVICE float
+__attribute__((noinline)) STDGPU_HOST_DEVICE float
 unordered_set<Key, Hash, KeyEqual, Allocator>::load_factor() const
 {
     return _base.load_factor();
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_HOST_DEVICE float
+__attribute__((noinline)) STDGPU_HOST_DEVICE float
 unordered_set<Key, Hash, KeyEqual, Allocator>::max_load_factor() const
 {
     return _base.max_load_factor();
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_HOST_DEVICE typename unordered_set<Key, Hash, KeyEqual, Allocator>::hasher
+__attribute__((noinline)) STDGPU_HOST_DEVICE typename unordered_set<Key, Hash, KeyEqual, Allocator>::hasher
 unordered_set<Key, Hash, KeyEqual, Allocator>::hash_function() const
 {
     return _base.hash_function();
 }
 
 template <typename Key, typename Hash, typename KeyEqual, typename Allocator>
-inline STDGPU_HOST_DEVICE typename unordered_set<Key, Hash, KeyEqual, Allocator>::key_equal
+__attribute__((noinline)) STDGPU_HOST_DEVICE typename unordered_set<Key, Hash, KeyEqual, Allocator>::key_equal
 unordered_set<Key, Hash, KeyEqual, Allocator>::key_eq() const
 {
     return _base.key_eq();

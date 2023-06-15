@@ -23,13 +23,13 @@
 namespace stdgpu::openmp
 {
 
-inline STDGPU_HOST_DEVICE bool
+__attribute__((noinline)) STDGPU_HOST_DEVICE bool
 atomic_is_lock_free() noexcept
 {
     return false;
 }
 
-inline STDGPU_DEVICE_ONLY void
+__attribute__((noinline)) STDGPU_DEVICE_ONLY void
 atomic_thread_fence() noexcept
 {
 #pragma omp flush

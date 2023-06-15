@@ -61,7 +61,7 @@ vector<T, Allocator>::destroyDeviceObject(vector<T, Allocator>& device_object)
 }
 
 template <typename T, typename Allocator>
-inline vector<T, Allocator>::vector(const mutex_array<mutex_default_type, mutex_array_allocator_type>& locks,
+__attribute__((noinline)) vector<T, Allocator>::vector(const mutex_array<mutex_default_type, mutex_array_allocator_type>& locks,
                                     const bitset<bitset_default_type, bitset_allocator_type>& occupied,
                                     const atomic<int, atomic_allocator_type>& size,
                                     const Allocator& allocator)
@@ -73,21 +73,21 @@ inline vector<T, Allocator>::vector(const mutex_array<mutex_default_type, mutex_
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_HOST_DEVICE typename vector<T, Allocator>::allocator_type
+__attribute__((noinline)) STDGPU_HOST_DEVICE typename vector<T, Allocator>::allocator_type
 vector<T, Allocator>::get_allocator() const noexcept
 {
     return _allocator;
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename vector<T, Allocator>::reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename vector<T, Allocator>::reference
 vector<T, Allocator>::at(const vector<T, Allocator>::index_type n)
 {
     return const_cast<vector<T, Allocator>::reference>(static_cast<const vector<T, Allocator>*>(this)->at(n));
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename vector<T, Allocator>::const_reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename vector<T, Allocator>::const_reference
 vector<T, Allocator>::at(const vector<T, Allocator>::index_type n) const
 {
     STDGPU_EXPECTS(0 <= n);
@@ -98,42 +98,42 @@ vector<T, Allocator>::at(const vector<T, Allocator>::index_type n) const
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename vector<T, Allocator>::reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename vector<T, Allocator>::reference
 vector<T, Allocator>::operator[](const vector<T, Allocator>::index_type n)
 {
     return const_cast<vector<T, Allocator>::reference>(static_cast<const vector<T, Allocator>*>(this)->operator[](n));
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename vector<T, Allocator>::const_reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename vector<T, Allocator>::const_reference
 vector<T, Allocator>::operator[](const vector<T, Allocator>::index_type n) const
 {
     return _data[n];
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename vector<T, Allocator>::reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename vector<T, Allocator>::reference
 vector<T, Allocator>::front()
 {
     return const_cast<reference>(static_cast<const vector<T, Allocator>*>(this)->front());
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename vector<T, Allocator>::const_reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename vector<T, Allocator>::const_reference
 vector<T, Allocator>::front() const
 {
     return operator[](0);
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename vector<T, Allocator>::reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename vector<T, Allocator>::reference
 vector<T, Allocator>::back()
 {
     return const_cast<reference>(static_cast<const vector<T, Allocator>*>(this)->back());
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename vector<T, Allocator>::const_reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename vector<T, Allocator>::const_reference
 vector<T, Allocator>::back() const
 {
     return operator[](size() - 1);
@@ -141,14 +141,14 @@ vector<T, Allocator>::back() const
 
 template <typename T, typename Allocator>
 template <class... Args>
-inline STDGPU_DEVICE_ONLY bool
+__attribute__((noinline)) STDGPU_DEVICE_ONLY bool
 vector<T, Allocator>::emplace_back(Args&&... args)
 {
     return push_back(T(forward<Args>(args)...));
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY bool
+__attribute__((noinline)) STDGPU_DEVICE_ONLY bool
 vector<T, Allocator>::push_back(const T& element)
 {
     bool pushed = false;
@@ -200,7 +200,7 @@ vector<T, Allocator>::push_back(const T& element)
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY pair<T, bool>
+__attribute__((noinline)) STDGPU_DEVICE_ONLY pair<T, bool>
 vector<T, Allocator>::pop_back()
 {
     // Value if no element will be popped, i.e. undefined behavior for element of type T
@@ -325,7 +325,7 @@ vector_clear_iota(vector<T, Allocator>& v, const T& value)
 
 template <typename T, typename Allocator>
 template <typename ValueIterator, STDGPU_DETAIL_OVERLOAD_DEFINITION_IF(detail::is_iterator_v<ValueIterator>)>
-inline void
+__attribute__((noinline)) void
 vector<T, Allocator>::insert(device_ptr<const T> position, ValueIterator begin, ValueIterator end)
 {
     if (position != device_end())
@@ -354,7 +354,7 @@ vector<T, Allocator>::insert(device_ptr<const T> position, ValueIterator begin, 
 }
 
 template <typename T, typename Allocator>
-inline void
+__attribute__((noinline)) void
 vector<T, Allocator>::erase(device_ptr<const T> begin, device_ptr<const T> end)
 {
     if (end != device_end())
@@ -379,21 +379,21 @@ vector<T, Allocator>::erase(device_ptr<const T> begin, device_ptr<const T> end)
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_HOST_DEVICE bool
+__attribute__((noinline)) STDGPU_HOST_DEVICE bool
 vector<T, Allocator>::empty() const
 {
     return (size() == 0);
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_HOST_DEVICE bool
+__attribute__((noinline)) STDGPU_HOST_DEVICE bool
 vector<T, Allocator>::full() const
 {
     return (size() == max_size());
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_HOST_DEVICE index_t
+__attribute__((noinline)) STDGPU_HOST_DEVICE index_t
 vector<T, Allocator>::size() const
 {
     index_t current_size = _size.load();
@@ -422,42 +422,42 @@ vector<T, Allocator>::size() const
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_HOST_DEVICE index_t
+__attribute__((noinline)) STDGPU_HOST_DEVICE index_t
 vector<T, Allocator>::max_size() const noexcept
 {
     return capacity();
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_HOST_DEVICE index_t
+__attribute__((noinline)) STDGPU_HOST_DEVICE index_t
 vector<T, Allocator>::capacity() const noexcept
 {
     return _occupied.size();
 }
 
 template <typename T, typename Allocator>
-inline void
+__attribute__((noinline)) void
 vector<T, Allocator>::shrink_to_fit()
 {
     // Reject request for performance reasons
 }
 
 template <typename T, typename Allocator>
-inline const T*
+__attribute__((noinline)) const T*
 vector<T, Allocator>::data() const noexcept
 {
     return _data;
 }
 
 template <typename T, typename Allocator>
-inline T*
+__attribute__((noinline)) T*
 vector<T, Allocator>::data() noexcept
 {
     return _data;
 }
 
 template <typename T, typename Allocator>
-inline void
+__attribute__((noinline)) void
 vector<T, Allocator>::clear()
 {
     if (empty())
@@ -483,7 +483,7 @@ vector<T, Allocator>::clear()
 }
 
 template <typename T, typename Allocator>
-inline bool
+__attribute__((noinline)) bool
 vector<T, Allocator>::valid() const
 {
     // Special case : Zero capacity is valid
@@ -552,7 +552,7 @@ vector<T, Allocator>::device_range() const
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY bool
+__attribute__((noinline)) STDGPU_DEVICE_ONLY bool
 vector<T, Allocator>::occupied(const index_t n) const
 {
     STDGPU_EXPECTS(0 <= n);

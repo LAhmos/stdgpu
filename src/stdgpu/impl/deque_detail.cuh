@@ -68,7 +68,7 @@ deque<T, Allocator>::destroyDeviceObject(deque<T, Allocator>& device_object)
 }
 
 template <typename T, typename Allocator>
-inline deque<T, Allocator>::deque(const mutex_array<mutex_default_type, mutex_array_allocator_type>& locks,
+__attribute__((noinline)) deque<T, Allocator>::deque(const mutex_array<mutex_default_type, mutex_array_allocator_type>& locks,
                                   const bitset<bitset_default_type, bitset_allocator_type>& occupied,
                                   const atomic<int, atomic_int_allocator_type>& size,
                                   const atomic<unsigned int, atomic_uint_allocator_type>& begin,
@@ -85,21 +85,21 @@ inline deque<T, Allocator>::deque(const mutex_array<mutex_default_type, mutex_ar
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_HOST_DEVICE typename deque<T, Allocator>::allocator_type
+__attribute__((noinline)) STDGPU_HOST_DEVICE typename deque<T, Allocator>::allocator_type
 deque<T, Allocator>::get_allocator() const noexcept
 {
     return _allocator;
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename deque<T, Allocator>::reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename deque<T, Allocator>::reference
 deque<T, Allocator>::at(const deque<T, Allocator>::index_type n)
 {
     return const_cast<reference>(static_cast<const deque<T, Allocator>*>(this)->at(n));
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename deque<T, Allocator>::const_reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename deque<T, Allocator>::const_reference
 deque<T, Allocator>::at(const deque<T, Allocator>::index_type n) const
 {
     STDGPU_EXPECTS(0 <= n);
@@ -110,14 +110,14 @@ deque<T, Allocator>::at(const deque<T, Allocator>::index_type n) const
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename deque<T, Allocator>::reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename deque<T, Allocator>::reference
 deque<T, Allocator>::operator[](const deque<T, Allocator>::index_type n)
 {
     return const_cast<reference>(static_cast<const deque<T, Allocator>*>(this)->operator[](n));
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename deque<T, Allocator>::const_reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename deque<T, Allocator>::const_reference
 deque<T, Allocator>::operator[](const deque<T, Allocator>::index_type n) const
 {
     index_t index_to_wrap = static_cast<index_t>(_begin.load()) + n;
@@ -125,28 +125,28 @@ deque<T, Allocator>::operator[](const deque<T, Allocator>::index_type n) const
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename deque<T, Allocator>::reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename deque<T, Allocator>::reference
 deque<T, Allocator>::front()
 {
     return const_cast<reference>(static_cast<const deque<T, Allocator>*>(this)->front());
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename deque<T, Allocator>::const_reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename deque<T, Allocator>::const_reference
 deque<T, Allocator>::front() const
 {
     return operator[](0);
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename deque<T, Allocator>::reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename deque<T, Allocator>::reference
 deque<T, Allocator>::back()
 {
     return const_cast<reference>(static_cast<const deque<T, Allocator>*>(this)->back());
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY typename deque<T, Allocator>::const_reference
+__attribute__((noinline)) STDGPU_DEVICE_ONLY typename deque<T, Allocator>::const_reference
 deque<T, Allocator>::back() const
 {
     return operator[](size() - 1);
@@ -154,14 +154,14 @@ deque<T, Allocator>::back() const
 
 template <typename T, typename Allocator>
 template <class... Args>
-inline STDGPU_DEVICE_ONLY bool
+__attribute__((noinline)) STDGPU_DEVICE_ONLY bool
 deque<T, Allocator>::emplace_back(Args&&... args)
 {
     return push_back(T(forward<Args>(args)...));
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY bool
+__attribute__((noinline)) STDGPU_DEVICE_ONLY bool
 deque<T, Allocator>::push_back(const T& element)
 {
     bool pushed = false;
@@ -212,7 +212,7 @@ deque<T, Allocator>::push_back(const T& element)
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY pair<T, bool>
+__attribute__((noinline)) STDGPU_DEVICE_ONLY pair<T, bool>
 deque<T, Allocator>::pop_back()
 {
     // Value if no element will be popped, i.e. undefined behavior for element of type T
@@ -266,14 +266,14 @@ deque<T, Allocator>::pop_back()
 
 template <typename T, typename Allocator>
 template <class... Args>
-inline STDGPU_DEVICE_ONLY bool
+__attribute__((noinline)) STDGPU_DEVICE_ONLY bool
 deque<T, Allocator>::emplace_front(Args&&... args)
 {
     return push_front(T(forward<Args>(args)...));
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY bool
+__attribute__((noinline)) STDGPU_DEVICE_ONLY bool
 deque<T, Allocator>::push_front(const T& element)
 {
     bool pushed = false;
@@ -325,7 +325,7 @@ deque<T, Allocator>::push_front(const T& element)
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY pair<T, bool>
+__attribute__((noinline)) STDGPU_DEVICE_ONLY pair<T, bool>
 deque<T, Allocator>::pop_front()
 {
     // Value if no element will be popped, i.e. undefined behavior for element of type T
@@ -377,21 +377,21 @@ deque<T, Allocator>::pop_front()
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_HOST_DEVICE bool
+__attribute__((noinline)) STDGPU_HOST_DEVICE bool
 deque<T, Allocator>::empty() const
 {
     return (size() == 0);
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_HOST_DEVICE bool
+__attribute__((noinline)) STDGPU_HOST_DEVICE bool
 deque<T, Allocator>::full() const
 {
     return (size() == max_size());
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_HOST_DEVICE index_t
+__attribute__((noinline)) STDGPU_HOST_DEVICE index_t
 deque<T, Allocator>::size() const
 {
     index_t current_size = _size.load();
@@ -420,42 +420,42 @@ deque<T, Allocator>::size() const
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_HOST_DEVICE index_t
+__attribute__((noinline)) STDGPU_HOST_DEVICE index_t
 deque<T, Allocator>::max_size() const noexcept
 {
     return capacity();
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_HOST_DEVICE index_t
+__attribute__((noinline)) STDGPU_HOST_DEVICE index_t
 deque<T, Allocator>::capacity() const noexcept
 {
     return _occupied.size();
 }
 
 template <typename T, typename Allocator>
-inline void
+__attribute__((noinline)) void
 deque<T, Allocator>::shrink_to_fit()
 {
     // Reject request for performance reasons
 }
 
 template <typename T, typename Allocator>
-inline const T*
+__attribute__((noinline)) const T*
 deque<T, Allocator>::data() const noexcept
 {
     return _data;
 }
 
 template <typename T, typename Allocator>
-inline T*
+__attribute__((noinline)) T*
 deque<T, Allocator>::data() noexcept
 {
     return _data;
 }
 
 template <typename T, typename Allocator>
-inline void
+__attribute__((noinline)) void
 deque<T, Allocator>::clear()
 {
     if (empty())
@@ -498,7 +498,7 @@ deque<T, Allocator>::clear()
 }
 
 template <typename T, typename Allocator>
-inline bool
+__attribute__((noinline)) bool
 deque<T, Allocator>::valid() const
 {
     // Special case : Zero capacity is valid
@@ -571,7 +571,7 @@ deque<T, Allocator>::device_range() const
 }
 
 template <typename T, typename Allocator>
-inline STDGPU_DEVICE_ONLY bool
+__attribute__((noinline)) STDGPU_DEVICE_ONLY bool
 deque<T, Allocator>::occupied(const index_t n) const
 {
     return _occupied[n];

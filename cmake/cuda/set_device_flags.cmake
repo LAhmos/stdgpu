@@ -9,6 +9,7 @@ function(stdgpu_set_device_flags STDGPU_OUTPUT_DEVICE_FLAGS)
         list(APPEND ${STDGPU_OUTPUT_DEVICE_FLAGS} "-Wsign-compare")
         list(APPEND ${STDGPU_OUTPUT_DEVICE_FLAGS} "-Wconversion")
         list(APPEND ${STDGPU_OUTPUT_DEVICE_FLAGS} "-Wfloat-equal")
+        list(APPEND ${STDGPU_OUTPUT_DEVICE_FLAGS} "-fno-inline") 
 
         if(STDGPU_COMPILE_WARNING_AS_ERROR AND CMAKE_VERSION VERSION_LESS 3.24)
             list(APPEND ${STDGPU_OUTPUT_DEVICE_FLAGS} "-Werror")
@@ -28,6 +29,8 @@ function(stdgpu_set_device_flags STDGPU_OUTPUT_DEVICE_FLAGS)
     endif()
 
     if(CMAKE_CUDA_COMPILER_ID STREQUAL "NVIDIA")
+        list(APPEND ${STDGPU_OUTPUT_DEVICE_FLAGS} "-fno-inline")  # Add the -Xptxas -fno-inline flag here
+
         string(REPLACE ";" "," ${STDGPU_OUTPUT_DEVICE_FLAGS} "${${STDGPU_OUTPUT_DEVICE_FLAGS}}")
         set(${STDGPU_OUTPUT_DEVICE_FLAGS} "-Xcompiler=${${STDGPU_OUTPUT_DEVICE_FLAGS}}")
     elseif(CMAKE_CUDA_COMPILER_ID STREQUAL "Clang")

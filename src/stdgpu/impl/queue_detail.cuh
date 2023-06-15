@@ -39,49 +39,49 @@ queue<T, ContainerT>::destroyDeviceObject(queue<T, ContainerT>& device_object)
 }
 
 template <typename T, typename ContainerT>
-inline STDGPU_DEVICE_ONLY bool
+__attribute__((noinline)) STDGPU_DEVICE_ONLY bool
 queue<T, ContainerT>::push(const T& element)
 {
     return _c.push_back(element);
 }
 
 template <typename T, typename ContainerT>
-inline STDGPU_DEVICE_ONLY pair<T, bool>
+__attribute__((noinline)) STDGPU_DEVICE_ONLY pair<T, bool>
 queue<T, ContainerT>::pop()
 {
     return _c.pop_front();
 }
 
 template <typename T, typename ContainerT>
-inline STDGPU_HOST_DEVICE bool
+__attribute__((noinline)) STDGPU_HOST_DEVICE bool
 queue<T, ContainerT>::empty() const
 {
     return _c.empty();
 }
 
 template <typename T, typename ContainerT>
-inline STDGPU_HOST_DEVICE bool
+__attribute__((noinline)) STDGPU_HOST_DEVICE bool
 queue<T, ContainerT>::full() const
 {
     return _c.full();
 }
 
 template <typename T, typename ContainerT>
-inline STDGPU_HOST_DEVICE index_t
+__attribute__((noinline)) STDGPU_HOST_DEVICE index_t
 queue<T, ContainerT>::size() const
 {
     return _c.size();
 }
 
 template <typename T, typename ContainerT>
-inline STDGPU_HOST_DEVICE index_t
+__attribute__((noinline)) STDGPU_HOST_DEVICE index_t
 queue<T, ContainerT>::capacity() const
 {
     return _c.capacity();
 }
 
 template <typename T, typename ContainerT>
-inline bool
+__attribute__((noinline)) bool
 queue<T, ContainerT>::valid() const
 {
     return _c.valid();

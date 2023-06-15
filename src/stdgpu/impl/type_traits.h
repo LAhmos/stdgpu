@@ -52,7 +52,7 @@ namespace stdgpu::detail
     };                                                                                                                 \
                                                                                                                        \
     template <typename T>                                                                                              \
-    inline constexpr bool STDGPU_DETAIL_CAT2(name, _v) = name<T>::value;
+    __attribute__((noinline)) constexpr bool STDGPU_DETAIL_CAT2(name, _v) = name<T>::value;
 
 // Clang does not detect T::pointer for thrust::device_pointer, so avoid checking it
 STDGPU_DETAIL_DEFINE_TRAIT(is_iterator,
@@ -77,7 +77,7 @@ struct dependent_false : std::false_type
 };
 
 template <typename T>
-inline constexpr bool dependent_false_v = dependent_false<T>::value;
+__attribute__((noinline)) constexpr bool dependent_false_v = dependent_false<T>::value;
 
 } // namespace stdgpu::detail
 

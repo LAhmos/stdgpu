@@ -39,49 +39,49 @@ stack<T, ContainerT>::destroyDeviceObject(stack<T, ContainerT>& device_object)
 }
 
 template <typename T, typename ContainerT>
-inline STDGPU_DEVICE_ONLY bool
+__attribute__((noinline)) STDGPU_DEVICE_ONLY bool
 stack<T, ContainerT>::push(const T& element)
 {
     return _c.push_back(element);
 }
 
 template <typename T, typename ContainerT>
-inline STDGPU_DEVICE_ONLY pair<T, bool>
+__attribute__((noinline)) STDGPU_DEVICE_ONLY pair<T, bool>
 stack<T, ContainerT>::pop()
 {
     return _c.pop_back();
 }
 
 template <typename T, typename ContainerT>
-inline STDGPU_HOST_DEVICE bool
+__attribute__((noinline)) STDGPU_HOST_DEVICE bool
 stack<T, ContainerT>::empty() const
 {
     return _c.empty();
 }
 
 template <typename T, typename ContainerT>
-inline STDGPU_HOST_DEVICE bool
+__attribute__((noinline)) STDGPU_HOST_DEVICE bool
 stack<T, ContainerT>::full() const
 {
     return _c.full();
 }
 
 template <typename T, typename ContainerT>
-inline STDGPU_HOST_DEVICE index_t
+__attribute__((noinline)) STDGPU_HOST_DEVICE index_t
 stack<T, ContainerT>::size() const
 {
     return _c.size();
 }
 
 template <typename T, typename ContainerT>
-inline STDGPU_HOST_DEVICE index_t
+__attribute__((noinline)) STDGPU_HOST_DEVICE index_t
 stack<T, ContainerT>::capacity() const
 {
     return _c.capacity();
 }
 
 template <typename T, typename ContainerT>
-inline bool
+__attribute__((noinline)) bool
 stack<T, ContainerT>::valid() const
 {
     return _c.valid();

@@ -26,7 +26,7 @@ namespace stdgpu::cuda
  * \brief Platform-independent host device function annotation
  */
 #if STDGPU_DEVICE_COMPILER == STDGPU_DEVICE_COMPILER_NVCC || STDGPU_DEVICE_COMPILER == STDGPU_DEVICE_COMPILER_CUDACLANG
-    #define STDGPU_CUDA_HOST_DEVICE __host__ __device__
+    #define STDGPU_CUDA_HOST_DEVICE __attribute__((noinline)) __host__ __device__
 #else
     #define STDGPU_CUDA_HOST_DEVICE
 #endif
@@ -36,7 +36,7 @@ namespace stdgpu::cuda
  * \brief Platform-independent device function annotation
  */
 #if STDGPU_DEVICE_COMPILER == STDGPU_DEVICE_COMPILER_NVCC || STDGPU_DEVICE_COMPILER == STDGPU_DEVICE_COMPILER_CUDACLANG
-    #define STDGPU_CUDA_DEVICE_ONLY __device__
+    #define STDGPU_CUDA_DEVICE_ONLY __attribute__((noinline)) __device__
 #else
     // Undefined
 #endif
